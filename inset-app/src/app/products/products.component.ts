@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
   products: any;
+  keyword: string = '';
 
   constructor(private productService: ProductService) {}
+
+  get filteredProducts() {
+    return this.products.filter((p: any) =>
+      p.name.toLowerCase().includes(this.keyword.toLowerCase())
+    );
+  }
 
   ngOnInit(): void {
     this.getProducts();
