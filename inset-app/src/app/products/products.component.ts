@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -11,19 +12,21 @@ import { CurrencyPipe } from '@angular/common';
 export class ProductsComponent implements OnInit {
   products: any;
 
+  constructor(private productService: ProductService) {}
+
   ngOnInit(): void {
-    // Les données seront initialisées ici
-    this.products = [
-      { id: 1, name: 'Ordinateur Portable', price: 1300, selected: true },
-      { id: 2, name: 'Imprimante Multifonction', price: 300, selected: false },
-      { id: 3, name: 'Smartphone 5G', price: 800, selected: true }
-    ];
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.products = this.productService.getAllProducts();
   }
 
   handleDelete(p: any) {
     let conf = confirm('Êtes-vous sûr de vouloir supprimer le produit ' + p.name + ' ?');
     if (conf) {
-      this.products = this.products.filter((product: any) => product.id !== p.id);
+      this.productService.deleteProduct(p);
+      this.getProducts(); // Actualisation de l'affichage
     }
   }
 }
