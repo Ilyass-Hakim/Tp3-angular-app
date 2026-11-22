@@ -19,14 +19,27 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
-    this.products = this.productService.getAllProducts();
+    this.productService.getAllProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des produits :', err);
+      }
+    });
   }
 
   handleDelete(p: any) {
-    let conf = confirm('Êtes-vous sûr de vouloir supprimer le produit ' + p.name + ' ?');
+    let conf = confirm('Voulez-vous vraiment supprimer ' + p.name + ' ?');
     if (conf) {
-      this.productService.deleteProduct(p);
-      this.getProducts(); // Actualisation de l'affichage
+      this.productService.deleteProduct(p).subscribe({
+        next: () => {
+          this.getProducts(); // Rechargement de la liste après suppression HTTP
+        },
+        error: (err) => {
+          console.error('Erreur de suppression :', err);
+        }
+      });
     }
   }
 }
