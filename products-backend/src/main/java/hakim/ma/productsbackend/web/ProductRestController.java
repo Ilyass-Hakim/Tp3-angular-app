@@ -25,6 +25,11 @@ public class ProductRestController {
         return productRepository.findById(id).orElseThrow();
     }
 
+    @PostMapping("/products")
+    public Product saveProduct(@RequestBody Product product) {
+        return productRepository.save(product);
+    }
+
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productRepository.deleteById(id);
