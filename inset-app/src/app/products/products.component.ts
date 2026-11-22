@@ -29,6 +29,17 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  handleCheckProduct(p: any) {
+    this.productService.checkProduct(p).subscribe({
+      next: (updatedProduct) => {
+        p.selected = updatedProduct.selected;
+      },
+      error: (err) => {
+        console.error('Erreur de mise à jour :', err);
+      }
+    });
+  }
+
   handleDelete(p: any) {
     let conf = confirm('Voulez-vous vraiment supprimer ' + p.name + ' ?');
     if (conf) {

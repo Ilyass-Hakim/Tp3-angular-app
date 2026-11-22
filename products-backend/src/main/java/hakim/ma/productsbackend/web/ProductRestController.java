@@ -30,6 +30,13 @@ public class ProductRestController {
         return productRepository.save(product);
     }
 
+    @PatchMapping("/products/{id}")
+    public Product updateSelected(@PathVariable Long id, @RequestBody Product product) {
+        Product p = productRepository.findById(id).orElseThrow();
+        p.setSelected(product.isSelected());
+        return productRepository.save(p);
+    }
+
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productRepository.deleteById(id);

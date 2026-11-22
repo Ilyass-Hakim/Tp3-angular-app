@@ -21,4 +21,8 @@ export class ProductService {
   public saveProduct(product: any): Observable<any> {
     return this.http.post(`${this.host}/products`, product);
   }
+
+  public checkProduct(p: any): Observable<any> {
+    return this.http.patch(`${this.host}/products/${p.id}`, { selected: !p.selected });
+  }
 }

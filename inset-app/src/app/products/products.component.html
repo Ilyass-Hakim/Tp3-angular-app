@@ -23,11 +23,13 @@
                 <td>{{ p.price | currency:'EUR' }}</td>
                 <td>
                   @if (p.selected) {
-                    <span class="badge bg-success-subtle text-success border border-success">
+                    <span (click)="handleCheckProduct(p)" role="button" title="Cliquer pour désélectionner"
+                          class="badge bg-success-subtle text-success border border-success">
                       <i class="bi bi-check-circle-fill"></i> Sélectionné
                     </span>
                   } @else {
-                    <span class="badge bg-secondary-subtle text-secondary border">
+                    <span (click)="handleCheckProduct(p)" role="button" title="Cliquer pour sélectionner"
+                          class="badge bg-secondary-subtle text-secondary border">
                       <i class="bi bi-circle"></i> Non sélectionné
                     </span>
                   }
